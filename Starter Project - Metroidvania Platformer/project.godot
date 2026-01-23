@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Metroidvania"
+config/name="Platformer"
+run/main_scene="uid://h0tn6a078vmb"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
