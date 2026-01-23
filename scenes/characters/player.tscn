@@ -1,23 +1,96 @@
-[gd_scene load_steps=3 format=3 uid="uid://8necg2r51d6x"]
+[gd_scene load_steps=9 format=3 uid="uid://8necg2r51d6x"]
 
 [ext_resource type="Texture2D" uid="uid://de5wf7al0hknv" path="res://graphics/characters/player.png" id="1_rp718"]
+[ext_resource type="Script" uid="uid://sqpdk2ficbuo" path="res://scenes/characters/player.gd" id="1_yewv4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yewv4"]
 radius = 6.0
-height = 34.0
+height = 32.0
+
+[sub_resource type="Animation" id="Animation_yewv4"]
+resource_name = "run"
+length = 1.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/LegSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 0.96666664, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [26, 27, 28, 29, 30, 31, 32]
+}
+
+[sub_resource type="Animation" id="Animation_76oj4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/LegSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [24]
+}
+
+[sub_resource type="Animation" id="Animation_dyp2m"]
+resource_name = "jump"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/LegSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [25]
+}
+
+[sub_resource type="Animation" id="Animation_atpat"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/LegSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [24]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_76oj4"]
+_data = {
+&"RESET": SubResource("Animation_76oj4"),
+&"idle": SubResource("Animation_atpat"),
+&"jump": SubResource("Animation_dyp2m"),
+&"run": SubResource("Animation_yewv4")
+}
 
 [node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_yewv4")
 
 [node name="Sprites" type="Node2D" parent="."]
 
 [node name="TorsoSprite" type="Sprite2D" parent="Sprites"]
-position = Vector2(0, -9)
+position = Vector2(0, -8)
 texture = ExtResource("1_rp718")
 hframes = 8
 vframes = 5
 
 [node name="LegSprite" type="Sprite2D" parent="Sprites"]
-position = Vector2(0, -6)
+position = Vector2(0, -7)
 texture = ExtResource("1_rp718")
 hframes = 8
 vframes = 5
@@ -25,3 +98,11 @@ frame = 24
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_yewv4")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_76oj4")
+}
