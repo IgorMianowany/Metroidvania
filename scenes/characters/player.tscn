@@ -106,3 +106,9 @@ zoom = Vector2(3, 3)
 libraries = {
 &"": SubResource("AnimationLibrary_76oj4")
 }
+
+[node name="Timer" type="Node" parent="."]
+
+[node name="ReloadTimer" type="Timer" parent="Timer"]
+wait_time = 0.5
+one_shot = true

@@ -18,6 +18,9 @@ var gravity = 100
 @onready var legs_sprite : Sprite2D = $Sprites/LegSprite
 @onready var torso_sprite : Sprite2D = $Sprites/TorsoSprite
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
+@onready var reload_timer : Timer = $Timer/ReloadTimer
+
+signal shoot(pos : Vector2, dir : Vector2)
 
 const GUN_DIRECTIONS = {
 	Vector2i(0,0):   0,
@@ -47,6 +50,9 @@ func get_input():
 		fall_gravity *= 2
 	if Input.is_action_just_released("descend"):
 		fall_gravity *= .5
+	if Input.is_action_just_pressed("shoot") and not reload_timer.time_left:
+		shoot.emit(position, get_local_mouse_position().normalized())
+		reload_timer.start()
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action("exit"):
