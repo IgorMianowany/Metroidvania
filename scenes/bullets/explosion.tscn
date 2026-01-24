@@ -28,9 +28,12 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.8),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.26666668, 0.8),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
+"args": [],
+"method": &"hurt_targets"
+}, {
 "args": [],
 "method": &"queue_free"
 }]
@@ -58,6 +61,8 @@ _data = {
 }
 
 [node name="Explosion" type="Area2D"]
+collision_layer = 0
+collision_mask = 6
 script = ExtResource("1_2ydpy")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -72,3 +77,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_npy6q")
 }
 autoplay = "explode"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

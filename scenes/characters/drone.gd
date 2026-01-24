@@ -7,10 +7,10 @@ var health : int = 3:
 	set(value):
 		health = value
 		if health <= 0:
-			explode.emit(position)
+			explode.emit(position, 3)
 			queue_free()
 			
-signal explode(pos : Vector2)
+signal explode(pos : Vector2, damage : int)
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 

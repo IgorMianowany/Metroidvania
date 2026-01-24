@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 var direction_x : float
 var gravity = 100
+var health : int = 5
 
 @export_category("Move")
 @export var speed : float = 120
@@ -89,3 +90,6 @@ func move(delta : float):
 		
 func get_custom_gravity() -> float:
 	return jump_gravity if velocity.y < 0.0 else fall_gravity
+	
+func hit():
+	health -= 1
