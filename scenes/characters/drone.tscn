@@ -1,6 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://bqwjxnuodwn3b"]
+[gd_scene load_steps=13 format=3 uid="uid://bqwjxnuodwn3b"]
 
 [ext_resource type="Texture2D" uid="uid://vyr0ks75oxum" path="res://graphics/characters/drone.png" id="1_rpnsq"]
+[ext_resource type="Script" uid="uid://dk3i5udeqvxgx" path="res://scenes/characters/drone.gd" id="1_rxpq6"]
+[ext_resource type="Shader" uid="uid://d0ew16ecljkpp" path="res://shaders/flash.tres" id="2_k0cur"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_waagf"]
+resource_local_to_scene = true
+shader = ExtResource("2_k0cur")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rxpq6"]
 atlas = ExtResource("1_rpnsq")
@@ -38,9 +46,44 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_rpnsq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rxpq6"]
+radius = 98.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k0cur"]
+radius = 16.0
+
 [node name="Drone" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 11
+script = ExtResource("1_rxpq6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_waagf")
 sprite_frames = SubResource("SpriteFrames_4in0l")
 autoplay = "default"
-frame_progress = 0.8984377
+frame_progress = 0.20104241
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rpnsq")
+
+[node name="PlayerDetection" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
+shape = SubResource("CircleShape2D_rxpq6")
+debug_color = Color(0.8547999, 0.32532826, 0.46903342, 0.41960785)
+
+[node name="CollisionShape" type="Area2D" parent="." groups=["drones"]]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionShape"]
+shape = SubResource("CircleShape2D_k0cur")
+
+[connection signal="area_entered" from="PlayerDetection" to="." method="_on_player_detection_area_entered"]
+[connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]
+[connection signal="body_exited" from="PlayerDetection" to="." method="_on_player_detection_body_exited"]
+[connection signal="body_entered" from="CollisionShape" to="." method="_on_collision_shape_body_entered"]

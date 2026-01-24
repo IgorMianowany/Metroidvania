@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://g4t21u73pmy"]
+
+[ext_resource type="Script" uid="uid://dm880v4hh6y8d" path="res://scenes/bullets/explosion.gd" id="1_2ydpy"]
+[ext_resource type="Texture2D" uid="uid://bav7n447bnsa5" path="res://graphics/fire/explosion.png" id="1_gsvrn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gsvrn"]
+radius = 30.016663
+
+[sub_resource type="Animation" id="Animation_gsvrn"]
+resource_name = "explode"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.100000024, 0.20000003, 0.3, 0.40000004, 0.5, 0.6, 0.70000005),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_2ydpy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_npy6q"]
+_data = {
+&"RESET": SubResource("Animation_2ydpy"),
+&"explode": SubResource("Animation_gsvrn")
+}
+
+[node name="Explosion" type="Area2D"]
+script = ExtResource("1_2ydpy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_gsvrn")
+hframes = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gsvrn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_npy6q")
+}
+autoplay = "explode"

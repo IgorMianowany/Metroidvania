@@ -1,8 +1,19 @@
 extends Node2D
 
 var bullet_scene := preload("res://scenes/bullets/bullet.tscn")
+var explosion_scene := preload("res://scenes/bullets/explosion.tscn")
+
+func _ready() -> void:
+	for drone in get_tree().get_nodes_in_group('drones'):
+		drone.connect('explode', create_explosion)
 
 func _on_player_shoot(pos: Vector2, dir: Vector2) -> void:
 	var bullet : Bullet = bullet_scene.instantiate()
 	$Bullets.add_child(bullet)
 	bullet.setup(pos, dir)
+	
+func create_explosion(pos : Vector2):
+	var explosion = explosion_scene.instantiate()
+	$Entities.add_child(explosion)
+	explosion.setup(pos)
+	
