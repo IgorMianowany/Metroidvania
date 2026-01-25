@@ -3,6 +3,7 @@ extends Area2D
 
 var direction : Vector2
 var speed : int = 200
+var damage : int = 1
 
 const OFFSET : float = 16
 
@@ -20,5 +21,5 @@ func setup(pos : Vector2, dir : Vector2):
 
 func _on_body_entered(body: Node2D) -> void:
 	if 'health' in body:
-		body.hit()
+		body.hit(damage)
 	queue_free()

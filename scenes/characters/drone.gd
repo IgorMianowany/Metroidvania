@@ -28,13 +28,13 @@ func _on_player_detection_body_entered(body: Node2D) -> void:
 func _on_player_detection_body_exited(_body: Node2D) -> void:
 	player = null
 	
-func hit():
-	health -= 1
+func hit(damage : int):
+	health -= damage
 	var tween = create_tween()
 	tween.tween_property(sprite.material, 'shader_parameter/Progress', .8, 0.15)
 	tween.tween_property(sprite.material, 'shader_parameter/Progress', 0.0, 0.3)
 
 
 func _on_collision_shape_body_entered(_body: Node2D) -> void:
-	explode.emit(position)
+	explode.emit(position, 3)
 	queue_free()

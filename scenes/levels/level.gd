@@ -12,10 +12,10 @@ func _on_player_shoot(pos: Vector2, dir: Vector2) -> void:
 	$Bullets.add_child(bullet)
 	bullet.setup(pos, dir)
 	
-func create_explosion(pos : Vector2):
+func create_explosion(pos : Vector2, damage : int):
 	var explosion = explosion_scene.instantiate()
 	call_deferred('_add_explosion', explosion)
-	explosion.setup(pos)
+	explosion.setup(pos, damage)
 	
 func _add_explosion(explosion : Explosion):
 	$Entities.add_child(explosion)

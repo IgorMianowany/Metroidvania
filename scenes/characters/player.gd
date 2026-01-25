@@ -91,5 +91,5 @@ func move(delta : float):
 func get_custom_gravity() -> float:
 	return jump_gravity if velocity.y < 0.0 else fall_gravity
 	
-func hit():
-	health -= 1
+func hit(damage : int):
+	health -= damage
