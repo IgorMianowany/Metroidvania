@@ -1500,4 +1500,8 @@ tile_set = SubResource("TileSet_b2cq8")
 
 [node name="Lights" type="Node2D" parent="."]
 
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="Lights"]
+color = Color(0.2592937, 0.2592937, 0.2592937, 1)
+blend_mode = 1
+
 [connection signal="shoot" from="Player" to="." method="_on_player_shoot"]

@@ -106,6 +106,14 @@ _data = {
 collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_yewv4")
+dash_speed = null
+speed = null
+acelleration = null
+friction = null
+jump_height = null
+jump_time_to_peak = null
+jump_time_to_descent = null
+coyote_jump_time = null
 
 [node name="Sprites" type="Node2D" parent="."]
 
@@ -151,13 +159,8 @@ libraries = {
 wait_time = 0.5
 one_shot = true
 
-[node name="CoyoteTimer" type="Timer" parent="Timer"]
-one_shot = true
-
 [node name="PointLight2D" type="PointLight2D" parent="."]
 energy = 0.4
 texture = ExtResource("3_76oj4")
 
 [node name="UI" parent="." instance=ExtResource("4_dyp2m")]
-
-[connection signal="timeout" from="Timer/CoyoteTimer" to="." method="_on_coyote_timer_timeout"]

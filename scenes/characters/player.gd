@@ -9,6 +9,10 @@ var health : int = 5:
 		ui.set_health(health)
 var dash_duration : float = .5
 var is_dashing : bool = false
+var is_crouching : bool = false
+var crouching_speed_modifier : float = .85
+var coyote_jump : bool = true
+var on_floor : bool = true
 
 @export_category("Move")
 @export var dash_speed : float = 400
@@ -19,6 +23,7 @@ var is_dashing : bool = false
 @export var jump_height: float = 75
 @export var jump_time_to_peak: float = 0.5
 @export var jump_time_to_descent: float = 0.4
+@export var coyote_jump_time : float = .5
 
 @onready var jump_velocity: float = ((2.0 * jump_height) / jump_time_to_peak) * -1.0
 @onready var jump_gravity: float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
@@ -29,6 +34,8 @@ var is_dashing : bool = false
 @onready var reload_timer : Timer = $Timer/ReloadTimer
 @onready var ui : UI = $UI
 @onready var crosshair : Crosshair = $Sprites/Crosshair
+@onready var standing_collision_shape : CollisionShape2D = $StandingCollision
+@onready var crouching_collision_shape : CollisionShape2D = $CrouchCollision
 
 signal shoot(pos : Vector2, dir : Vector2)
 
@@ -51,16 +58,21 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	get_input()
 	move(delta)
+	on_floor = is_on_floor()
 	move_and_slide()
 	
 func _process(_delta: float) -> void:
+	if on_floor and not is_on_floor() and velocity.y >= 0:
+		$Timer/CoyoteTimer.start()
+		
 	animate()
 	update_crosshair()
 	
 func get_input():
 	direction_x = Input.get_axis("left", "right")
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and (is_on_floor() or $Timer/CoyoteTimer.time_left):
 		velocity.y = jump_velocity
+		$Timer/CoyoteTimer.stop()
 	if Input.is_action_just_pressed("descend"):
 		fall_gravity *= 2
 	if Input.is_action_just_released("descend"):
@@ -68,9 +80,10 @@ func get_input():
 	if Input.is_action_just_pressed("shoot") and not reload_timer.time_left:
 		shoot.emit(position, get_local_mouse_position().normalized())
 		reload_timer.start()
-	if Input.is_action_just_pressed("dash") and not is_dashing:
-		print("dashing")
+	if Input.is_action_just_pressed("dash") and not is_dashing and is_on_floor():
 		dash()
+	if Input.is_action_just_pressed("crouch"):
+		toggle_crouch()
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action("exit"):
@@ -94,10 +107,19 @@ func animate():
 	
 	torso_sprite.frame = GUN_DIRECTIONS[adjusted_dir]
 	animation_player.current_animation = animation
+	
+		
+	if is_crouching:
+		torso_sprite.position.y = -1
+		animation_player.current_animation = "crouch"
+	else:
+		torso_sprite.position.y = -8
 		
 func move(delta : float):
 	if direction_x:
 		velocity.x = move_toward(velocity.x, direction_x * speed, acelleration * delta)
+		if is_crouching:
+			velocity.x = velocity.x * crouching_speed_modifier
 	else:
 		velocity.x = move_toward(velocity.x, 0, friction * delta)
 	#velocity.x = direction_x * speed
@@ -123,4 +145,12 @@ func _dash_finish():
 
 func update_crosshair():
 	crosshair.position = get_local_mouse_position()
-	
+
+func toggle_crouch():
+	crouching_collision_shape.disabled = is_crouching
+	is_crouching = false if is_crouching else true
+	standing_collision_shape.disabled = is_crouching
+
+
+func _on_coyote_timer_timeout() -> void:
+	coyote_jump = false
