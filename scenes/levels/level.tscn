@@ -1498,4 +1498,6 @@ tile_set = SubResource("TileSet_b2cq8")
 
 [node name="Bullets" type="Node2D" parent="."]
 
+[node name="Lights" type="Node2D" parent="."]
+
 [connection signal="shoot" from="Player" to="." method="_on_player_shoot"]

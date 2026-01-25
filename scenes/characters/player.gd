@@ -3,9 +3,15 @@ extends CharacterBody2D
 
 var direction_x : float
 var gravity = 100
-var health : int = 5
+var health : int = 5:
+	set(value):
+		health = value
+		ui.set_health(health)
+var dash_duration : float = .5
+var is_dashing : bool = false
 
 @export_category("Move")
+@export var dash_speed : float = 400
 @export var speed : float = 120
 @export var acelleration : float = 600
 @export var friction : float = 800
@@ -21,6 +27,8 @@ var health : int = 5
 @onready var torso_sprite : Sprite2D = $Sprites/TorsoSprite
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 @onready var reload_timer : Timer = $Timer/ReloadTimer
+@onready var ui : UI = $UI
+@onready var crosshair : Crosshair = $Sprites/Crosshair
 
 signal shoot(pos : Vector2, dir : Vector2)
 
@@ -36,6 +44,10 @@ const GUN_DIRECTIONS = {
 	Vector2i(1,-1):  7,
 }
 
+func _ready() -> void:
+	ui.set_health(health)
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+
 func _physics_process(delta: float) -> void:
 	get_input()
 	move(delta)
@@ -43,6 +55,7 @@ func _physics_process(delta: float) -> void:
 	
 func _process(_delta: float) -> void:
 	animate()
+	update_crosshair()
 	
 func get_input():
 	direction_x = Input.get_axis("left", "right")
@@ -55,6 +68,9 @@ func get_input():
 	if Input.is_action_just_pressed("shoot") and not reload_timer.time_left:
 		shoot.emit(position, get_local_mouse_position().normalized())
 		reload_timer.start()
+	if Input.is_action_just_pressed("dash") and not is_dashing:
+		print("dashing")
+		dash()
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action("exit"):
@@ -93,3 +109,18 @@ func get_custom_gravity() -> float:
 	
 func hit(damage : int):
 	health -= damage
+	
+func dash():
+	is_dashing = true
+	var tween = create_tween()
+	tween.tween_property(self, "velocity:x", velocity.x + direction_x * dash_speed, .3)
+	tween.tween_callback(_dash_finish)
+	await(get_tree().create_timer(1).timeout)
+	is_dashing = false
+	
+func _dash_finish():
+	velocity.x = move_toward(velocity.x, 0, 50)
+
+func update_crosshair():
+	crosshair.position = get_local_mouse_position()
+	

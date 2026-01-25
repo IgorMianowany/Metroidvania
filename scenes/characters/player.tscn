@@ -1,7 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://8necg2r51d6x"]
+[gd_scene load_steps=12 format=3 uid="uid://8necg2r51d6x"]
 
 [ext_resource type="Texture2D" uid="uid://de5wf7al0hknv" path="res://graphics/characters/player.png" id="1_rp718"]
 [ext_resource type="Script" uid="uid://sqpdk2ficbuo" path="res://scenes/characters/player.gd" id="1_yewv4"]
+[ext_resource type="Texture2D" uid="uid://dijla4pisrrw8" path="res://graphics/lights/main.png" id="3_76oj4"]
+[ext_resource type="PackedScene" uid="uid://dr8mlmps77oc4" path="res://scenes/characters/crosshair.tscn" id="3_atpat"]
+[ext_resource type="PackedScene" uid="uid://tgvve4hadwf1" path="res://scenes/ui.tscn" id="4_dyp2m"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yewv4"]
 radius = 6.0
@@ -98,6 +101,9 @@ hframes = 8
 vframes = 5
 frame = 24
 
+[node name="Crosshair" parent="Sprites" instance=ExtResource("3_atpat")]
+scale = Vector2(0.4351026, 0.4351026)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_yewv4")
 
@@ -114,3 +120,9 @@ libraries = {
 [node name="ReloadTimer" type="Timer" parent="Timer"]
 wait_time = 0.5
 one_shot = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 0.4
+texture = ExtResource("3_76oj4")
+
+[node name="UI" parent="." instance=ExtResource("4_dyp2m")]

@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=4 uid="uid://d3y8163jgq6cu"]
+[gd_scene load_steps=7 format=4 uid="uid://d3y8163jgq6cu"]
 
 [ext_resource type="PackedScene" uid="uid://b1lbxe8lybwd7" path="res://scenes/levels/level.tscn" id="1_1eclv"]
 [ext_resource type="PackedScene" uid="uid://dlx07wsxgahau" path="res://scenes/levels/teleport.tscn" id="2_6c57m"]
 [ext_resource type="PackedScene" uid="uid://bqwjxnuodwn3b" path="res://scenes/characters/drone.tscn" id="3_kq76o"]
+[ext_resource type="Texture2D" uid="uid://6j2he24a4uda" path="res://graphics/lights/l3.png" id="4_wvdar"]
+[ext_resource type="Texture2D" uid="uid://bo5lofshl02cv" path="res://graphics/lights/l0.png" id="5_osb2y"]
+[ext_resource type="Texture2D" uid="uid://cbn5tc4c0ckcp" path="res://graphics/lights/l2.png" id="6_katyj"]
 
 [node name="Subway" instance=ExtResource("1_1eclv")]
 
@@ -33,6 +36,70 @@ position = Vector2(1273, 517)
 position = Vector2(1133, 519)
 
 [node name="Player" parent="." index="2"]
-position = Vector2(888, 531)
+position = Vector2(1337, 760)
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="Lights" index="0"]
+color = Color(0.2592937, 0.2592937, 0.2592937, 1)
+blend_mode = 1
+
+[node name="PointLight2D" type="PointLight2D" parent="Lights" index="1"]
+position = Vector2(1213, 728)
+texture = ExtResource("4_wvdar")
+
+[node name="PointLight2D8" type="PointLight2D" parent="Lights" index="2"]
+position = Vector2(1407, 735)
+energy = 2.95
+texture = ExtResource("5_osb2y")
+
+[node name="PointLight2D9" type="PointLight2D" parent="Lights" index="3"]
+position = Vector2(1055, 737)
+energy = 2.95
+texture = ExtResource("5_osb2y")
+
+[node name="PointLight2D10" type="PointLight2D" parent="Lights" index="4"]
+position = Vector2(687, 737)
+energy = 2.95
+texture = ExtResource("5_osb2y")
+
+[node name="PointLight2D11" type="PointLight2D" parent="Lights" index="5"]
+position = Vector2(527, 497)
+energy = 2.95
+texture = ExtResource("5_osb2y")
+
+[node name="PointLight2D12" type="PointLight2D" parent="Lights" index="6"]
+position = Vector2(1231, 498)
+energy = 2.95
+texture = ExtResource("5_osb2y")
+
+[node name="PointLight2D13" type="PointLight2D" parent="Lights" index="7"]
+position = Vector2(1479, 483.00003)
+scale = Vector2(0.2547868, 1.2071351)
+energy = 2.95
+texture = ExtResource("5_osb2y")
+
+[node name="PointLight2D2" type="PointLight2D" parent="Lights" index="8"]
+position = Vector2(1134, 713)
+texture = ExtResource("4_wvdar")
+
+[node name="PointLight2D3" type="PointLight2D" parent="Lights" index="9"]
+position = Vector2(653, 728)
+texture = ExtResource("4_wvdar")
+
+[node name="PointLight2D5" type="PointLight2D" parent="Lights" index="10"]
+position = Vector2(463, 489)
+texture = ExtResource("4_wvdar")
+
+[node name="PointLight2D4" type="PointLight2D" parent="Lights" index="11"]
+position = Vector2(438, 722)
+rotation = -1.5707964
+texture = ExtResource("4_wvdar")
+
+[node name="PointLight2D6" type="PointLight2D" parent="Lights" index="12"]
+position = Vector2(455, 472)
+texture = ExtResource("6_katyj")
+
+[node name="PointLight2D7" type="PointLight2D" parent="Lights" index="13"]
+position = Vector2(1319, 473)
+texture = ExtResource("6_katyj")
 
 [editable path="Entities/Teleport"]
