@@ -1494,7 +1494,7 @@ tile_set = SubResource("TileSet_b2cq8")
 
 [node name="Entities" type="Node2D" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("2_bovvr")]
+[node name="Player" parent="Entities" instance=ExtResource("2_bovvr")]
 
 [node name="Bullets" type="Node2D" parent="."]
 
@@ -1504,4 +1504,4 @@ tile_set = SubResource("TileSet_b2cq8")
 color = Color(0.2592937, 0.2592937, 0.2592937, 1)
 blend_mode = 1
 
-[connection signal="shoot" from="Player" to="." method="_on_player_shoot"]
+[connection signal="shoot" from="Entities/Player" to="." method="_on_player_shoot"]
