@@ -35,8 +35,8 @@ position = Vector2(1273, 517)
 [node name="Drone2" parent="Entities" index="2" instance=ExtResource("3_kq76o")]
 position = Vector2(1133, 519)
 
-[node name="Player" parent="." index="2"]
-position = Vector2(1337, 760)
+[node name="Player" parent="Entities" index="3"]
+position = Vector2(957, 693)
 
 [node name="PointLight2D" type="PointLight2D" parent="Lights" index="0"]
 position = Vector2(1213, 728)

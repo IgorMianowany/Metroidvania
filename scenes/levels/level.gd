@@ -7,10 +7,14 @@ func _ready() -> void:
 	for drone in get_tree().get_nodes_in_group('drones'):
 		drone.connect('explode', create_explosion)
 
-func _on_player_shoot(pos: Vector2, dir: Vector2) -> void:
-	var bullet : Bullet = bullet_scene.instantiate()
-	$Bullets.add_child(bullet)
-	bullet.setup(pos, dir)
+func _on_player_shoot(pos: Vector2, dir: Vector2, gun : Data.Gun) -> void:
+	if gun != Data.Gun.SHOTGUN:
+		var bullet : Bullet = bullet_scene.instantiate()
+		bullet.connect('explode', create_explosion)
+		$Bullets.add_child(bullet)
+		bullet.setup(pos, dir, gun)
+	else:
+		pass
 	
 func create_explosion(pos : Vector2, damage : int):
 	var explosion = explosion_scene.instantiate()

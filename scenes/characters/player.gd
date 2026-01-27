@@ -13,6 +13,7 @@ var is_crouching : bool = false
 var crouching_speed_modifier : float = .85
 var coyote_jump : bool = true
 var on_floor : bool = true
+var current_gun : Data.Gun = Data.Gun.SINGLE
 
 @export_category("Move")
 @export var dash_speed : float = 400
@@ -37,7 +38,7 @@ var on_floor : bool = true
 @onready var standing_collision_shape : CollisionShape2D = $StandingCollision
 @onready var crouching_collision_shape : CollisionShape2D = $CrouchCollision
 
-signal shoot(pos : Vector2, dir : Vector2)
+signal shoot(pos : Vector2, dir : Vector2, gun : Data.Gun)
 
 const GUN_DIRECTIONS = {
 	Vector2i(0,0):   0,
@@ -54,6 +55,7 @@ const GUN_DIRECTIONS = {
 func _ready() -> void:
 	ui.set_health(health)
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+
 
 func _physics_process(delta: float) -> void:
 	get_input()
@@ -78,13 +80,16 @@ func get_input():
 	if Input.is_action_just_released("descend"):
 		fall_gravity *= .5
 	if Input.is_action_just_pressed("shoot") and not reload_timer.time_left:
-		shoot.emit(position, get_local_mouse_position().normalized())
+		shoot.emit(position, get_local_mouse_position().normalized(), current_gun)
 		reload_timer.start()
+		if current_gun == Data.Gun.SHOTGUN:
+			$ShotgunParticles
 	if Input.is_action_just_pressed("dash") and not is_dashing and is_on_floor():
 		dash()
 	if Input.is_action_just_pressed("crouch"):
 		toggle_crouch()
-	
+	if Input.is_action_just_pressed("toggle"):
+		toggle_weapons()
 func _input(event: InputEvent) -> void:
 	if event.is_action("exit"):
 		get_tree().quit()
@@ -105,7 +110,7 @@ func animate():
 	var adjusted_dir = Vector2i(round(raw_dir.x), round(raw_dir.y))
 	
 	
-	torso_sprite.frame = GUN_DIRECTIONS[adjusted_dir]
+	torso_sprite.frame = GUN_DIRECTIONS[adjusted_dir] + torso_sprite.hframes * current_gun
 	animation_player.current_animation = animation
 	
 		
@@ -151,6 +156,9 @@ func toggle_crouch():
 	is_crouching = false if is_crouching else true
 	standing_collision_shape.disabled = is_crouching
 
-
 func _on_coyote_timer_timeout() -> void:
 	coyote_jump = false
+
+func toggle_weapons():
+	current_gun = posmod(current_gun + 1, Data.Gun.size()) as Data.Gun
+	
