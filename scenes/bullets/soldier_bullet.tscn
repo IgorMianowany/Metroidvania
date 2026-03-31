@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://o7vp6nf5801h"]
+
+[ext_resource type="Script" uid="uid://c5xnlk1d3d4yl" path="res://scenes/bullets/bullet.gd" id="1_6ql10"]
+[ext_resource type="Texture2D" uid="uid://cqkfptu3l3gw1" path="res://graphics/characters/ARMob.png" id="2_6ql10"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6ql10"]
+
+[node name="SoldierBullet" type="Area2D"]
+z_index = 2
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_6ql10")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-0.05, 0.25)
+texture = ExtResource("2_6ql10")
+hframes = 24
+frame = 23
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.99999976, 0.99999976)
+shape = SubResource("CircleShape2D_6ql10")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -5,6 +5,7 @@ var direction : Vector2
 var speed : int = 200
 var damage : int = 1
 var gun_type: Data.Gun
+var timer : float = 3
 
 @onready var sprite : Sprite2D = $Sprite2D
 
@@ -23,6 +24,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	position += direction * speed * delta
+	timer -= delta
+	if timer <= 0:
+		queue_free()
 	
 func setup(pos : Vector2, dir : Vector2, gun : Data.Gun):
 	position = pos + dir * OFFSET
