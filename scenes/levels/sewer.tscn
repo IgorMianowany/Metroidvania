@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=4 uid="uid://cyu4hoq748a3l"]
+[gd_scene load_steps=4 format=4 uid="uid://cyu4hoq748a3l"]
 
 [ext_resource type="PackedScene" uid="uid://b1lbxe8lybwd7" path="res://scenes/levels/level.tscn" id="1_ghk2a"]
 [ext_resource type="Texture2D" uid="uid://bo5lofshl02cv" path="res://graphics/lights/l0.png" id="2_a6d5v"]
+[ext_resource type="PackedScene" uid="uid://cnrfcxgisbssa" path="res://scenes/levels/transition_gate.tscn" id="3_su143"]
 
 [node name="Sewer" instance=ExtResource("1_ghk2a")]
 
@@ -16,6 +17,9 @@ tile_map_data = PackedByteArray("AAAiABcAAAAEABAAAAAiABgAAAAEABAAAAAiABkAAAAEABA
 
 [node name="FrontDetailLayer" parent="Layers" index="3"]
 tile_map_data = PackedByteArray("AAAmABkAAAANAAYAAAAnABcAAAAOAAQAAAAnABgAAAAOAAUAAAAnABkAAAAOAAYAAAAoABcAAAAPAAQAAAAoABgAAAAPAAUAAAAoABkAAAAPAAYAAAApABkAAAAQAAYAAAA3ABkAAAANAAYAAAA4ABcAAAAOAAQAAAA4ABgAAAAOAAUAAAA4ABkAAAAOAAYAAAA5ABcAAAAPAAQAAAA5ABgAAAAPAAUAAAA5ABkAAAAPAAYAAAA6ABkAAAAQAAYAAABIABkAAAANAAYAAABJABcAAAAOAAQAAABJABgAAAAOAAUAAABJABkAAAAOAAYAAABKABcAAAAPAAQAAABKABgAAAAPAAUAAABKABkAAAAPAAYAAABLABkAAAAQAAYAAAA=")
+
+[node name="Player" parent="Entities" index="0"]
+position = Vector2(392, 475)
 
 [node name="PointLight2D" type="PointLight2D" parent="Lights" index="1"]
 position = Vector2(639, 442)
@@ -34,3 +38,16 @@ position = Vector2(1182, 442)
 scale = Vector2(1, 1.4)
 energy = 2.0
 texture = ExtResource("2_a6d5v")
+
+[node name="TransitionGate" parent="Gates" index="0" instance=ExtResource("3_su143")]
+position = Vector2(608, 478)
+
+[node name="Marker2D" type="Marker2D" parent="Gates/TransitionGate" index="1"]
+position = Vector2(48, 19)
+
+[node name="TransitionGate2" parent="Gates" index="1" instance=ExtResource("3_su143")]
+position = Vector2(1174, 462)
+target = 1
+
+[node name="Marker2D" type="Marker2D" parent="Gates/TransitionGate2" index="1"]
+position = Vector2(-53, 21)

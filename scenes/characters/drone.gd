@@ -8,8 +8,10 @@ var health : int = 3:
 		health = value
 		if health <= 0:
 			explode.emit(position, 3)
+			spawn_point.defeated = true
 			queue_free()
-			
+var spawn_point : Marker2D
+
 signal explode(pos : Vector2, damage : int)
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
@@ -37,4 +39,9 @@ func hit(damage : int):
 
 func _on_collision_shape_body_entered(_body: Node2D) -> void:
 	explode.emit(position, 3)
+	spawn_point.defeated = true
 	queue_free()
+	
+func setup(spawner : Marker2D):
+	position = spawner.global_position
+	spawn_point = spawner

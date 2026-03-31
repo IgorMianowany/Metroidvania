@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=4 uid="uid://cj5jhfycguu70"]
+[gd_scene load_steps=8 format=4 uid="uid://cj5jhfycguu70"]
 
 [ext_resource type="PackedScene" uid="uid://b1lbxe8lybwd7" path="res://scenes/levels/level.tscn" id="1_mtwam"]
 [ext_resource type="Texture2D" uid="uid://dwx81i28u52aj" path="res://graphics/sky/nuvens_3.png" id="2_baaf3"]
 [ext_resource type="Texture2D" uid="uid://b063xwi30iqud" path="res://graphics/sky/nuvens_2.png" id="3_s0dui"]
 [ext_resource type="Texture2D" uid="uid://xrralref6v36" path="res://graphics/sky/nuvens_1.png" id="4_s0dui"]
+[ext_resource type="PackedScene" uid="uid://cnrfcxgisbssa" path="res://scenes/levels/transition_gate.tscn" id="5_0rn0b"]
 
 [sub_resource type="Gradient" id="Gradient_s0dui"]
 colors = PackedColorArray(0.7058824, 0.23921569, 0.19215687, 1, 0.7058824, 0.23921569, 0.19215687, 1)
@@ -66,3 +67,9 @@ tile_map_data = PackedByteArray("AAAkACoAAAABAAIAAAAlACgAAAACAAIAAAAmACgAAAABAAI
 
 [node name="Player" parent="Entities" index="0"]
 position = Vector2(671, 397)
+
+[node name="TransitionGate" parent="Gates" index="0" instance=ExtResource("5_0rn0b")]
+position = Vector2(477, 535)
+
+[node name="Marker2D" type="Marker2D" parent="Gates/TransitionGate" index="1"]
+position = Vector2(49, -8)

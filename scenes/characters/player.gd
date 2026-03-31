@@ -3,10 +3,10 @@ extends CharacterBody2D
 
 var direction_x : float
 var gravity = 100
-var health : int = 5:
-	set(value):
-		health = value
-		ui.set_health(health)
+#var health : int = 5:
+	#set(value):
+		#health = value
+		#ui.set_health(health)
 var dash_duration : float = .5
 var is_dashing : bool = false
 var is_crouching : bool = false
@@ -15,6 +15,7 @@ var coyote_jump : bool = true
 var on_floor : bool = true
 var current_gun : Data.Gun = Data.Gun.SINGLE
 var shotgun_distance : float = 30
+var frozen : bool = false
 
 @export_category("Move")
 @export var dash_speed : float = 400
@@ -55,11 +56,13 @@ const GUN_DIRECTIONS = {
 }
 
 func _ready() -> void:
-	ui.set_health(health)
+	ui.set_health(Data.player_health)
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 
 func _physics_process(delta: float) -> void:
+	if frozen:
+		return
 	get_input()
 	move(delta)
 	on_floor = is_on_floor()
@@ -142,8 +145,9 @@ func get_custom_gravity() -> float:
 	return jump_gravity if velocity.y < 0.0 else fall_gravity
 	
 func hit(damage : int):
-	health -= damage
-	
+	Data.player_health -= damage
+	ui.set_health(Data.player_health)
+		
 func dash():
 	is_dashing = true
 	var tween = create_tween()
@@ -170,4 +174,8 @@ func _on_coyote_timer_timeout() -> void:
 
 func toggle_weapons():
 	current_gun = posmod(current_gun + 1, Data.Gun.size()) as Data.Gun
+	
+func freeze():
+	frozen = true
+	animation_player.stop()
 	

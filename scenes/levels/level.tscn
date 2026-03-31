@@ -1504,4 +1504,8 @@ tile_set = SubResource("TileSet_b2cq8")
 color = Color(0.2592937, 0.2592937, 0.2592937, 1)
 blend_mode = 1
 
+[node name="Gates" type="Node2D" parent="."]
+
+[node name="EnemySpawns" type="Node2D" parent="."]
+
 [connection signal="shoot" from="Entities/Player" to="." method="_on_player_shoot"]

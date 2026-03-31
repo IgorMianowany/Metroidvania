@@ -2,8 +2,20 @@ extends Node2D
 
 var bullet_scene := preload("res://scenes/bullets/bullet.tscn")
 var explosion_scene := preload("res://scenes/bullets/explosion.tscn")
+var enemy_scenes = {
+	Data.Enemy.DRONE : preload("res://scenes/characters/drone.tscn")
+}
+
+@onready var gates = $Gates
+@onready var player = $Entities/Player
 
 func _ready() -> void:
+	for spawn_point : Marker2D in $EnemySpawns.get_children():
+		if spawn_point.defeated == false:
+			var enemy = enemy_scenes[spawn_point.type].instantiate()
+			enemy.setup(spawn_point)
+			$Entities.add_child(enemy)
+	
 	for drone in get_tree().get_nodes_in_group('drones'):
 		drone.connect('explode', create_explosion)
 
@@ -27,4 +39,10 @@ func create_explosion(pos : Vector2, damage : int):
 	
 func _add_explosion(explosion : Explosion):
 	$Entities.add_child(explosion)
+	
+func position_player(level : Data.Level):
+	for gate in gates.get_children():
+		if gate.target == level:
+			player.position = gate.get_child(-1).global_position
+		
 	
