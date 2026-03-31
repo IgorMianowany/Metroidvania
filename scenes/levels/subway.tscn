@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://d3y8163jgq6cu"]
+[gd_scene load_steps=9 format=4 uid="uid://d3y8163jgq6cu"]
 
 [ext_resource type="PackedScene" uid="uid://b1lbxe8lybwd7" path="res://scenes/levels/level.tscn" id="1_1eclv"]
 [ext_resource type="PackedScene" uid="uid://dlx07wsxgahau" path="res://scenes/levels/teleport.tscn" id="2_6c57m"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bo5lofshl02cv" path="res://graphics/lights/l0.png" id="5_osb2y"]
 [ext_resource type="Texture2D" uid="uid://cbn5tc4c0ckcp" path="res://graphics/lights/l2.png" id="6_katyj"]
 [ext_resource type="PackedScene" uid="uid://cnrfcxgisbssa" path="res://scenes/levels/transition_gate.tscn" id="7_osb2y"]
+[ext_resource type="PackedScene" uid="uid://cmcny6l8a0e8y" path="res://scenes/characters/soldier.tscn" id="8_5n444"]
 [ext_resource type="PackedScene" uid="uid://dwfe0gihtkmee" path="res://scenes/levels/enemy_spawner.tscn" id="8_katyj"]
 
 [node name="Subway" instance=ExtResource("1_1eclv")]
@@ -108,5 +109,8 @@ position = Vector2(668, 534)
 
 [node name="EnemySpawner2" parent="EnemySpawns" index="1" instance=ExtResource("8_katyj")]
 position = Vector2(1198, 530)
+
+[node name="Soldier" parent="." index="6" instance=ExtResource("8_5n444")]
+position = Vector2(789, 537)
 
 [editable path="Entities/Teleport"]
