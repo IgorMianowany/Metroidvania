@@ -1,11 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://8necg2r51d6x"]
+[gd_scene load_steps=15 format=3 uid="uid://8necg2r51d6x"]
 
 [ext_resource type="Texture2D" uid="uid://de5wf7al0hknv" path="res://graphics/characters/player.png" id="1_rp718"]
 [ext_resource type="Script" uid="uid://sqpdk2ficbuo" path="res://scenes/characters/player.gd" id="1_yewv4"]
 [ext_resource type="Texture2D" uid="uid://dijla4pisrrw8" path="res://graphics/lights/main.png" id="3_76oj4"]
 [ext_resource type="PackedScene" uid="uid://dr8mlmps77oc4" path="res://scenes/characters/crosshair.tscn" id="3_atpat"]
 [ext_resource type="PackedScene" uid="uid://tgvve4hadwf1" path="res://scenes/ui.tscn" id="4_dyp2m"]
-[ext_resource type="Texture2D" uid="uid://cya8nsfxd5dut" path="res://graphics/fire/shotgun_explosion.png" id="6_kqtwu"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yewv4"]
 radius = 6.0
@@ -103,19 +102,9 @@ _data = {
 &"run": SubResource("Animation_yewv4")
 }
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6eyoc"]
-particles_animation = true
-particles_anim_h_frames = 7
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_atpat"]
 particle_flag_disable_z = true
-initial_velocity_min = 200.0
-initial_velocity_max = 280.0
 gravity = Vector3(0, 0, 0)
-anim_speed_min = 0.29999998
-anim_speed_max = 2.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -175,11 +164,7 @@ texture = ExtResource("3_76oj4")
 [node name="UI" parent="." instance=ExtResource("4_dyp2m")]
 
 [node name="ShotgunParticles" type="GPUParticles2D" parent="."]
-material = SubResource("CanvasItemMaterial_6eyoc")
 emitting = false
-amount = 20
-texture = ExtResource("6_kqtwu")
-lifetime = 0.3
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_atpat")
 

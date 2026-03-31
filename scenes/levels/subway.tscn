@@ -36,7 +36,7 @@ position = Vector2(1273, 517)
 position = Vector2(1133, 519)
 
 [node name="Player" parent="Entities" index="3"]
-position = Vector2(957, 693)
+position = Vector2(968, 529)
 
 [node name="PointLight2D" type="PointLight2D" parent="Lights" index="0"]
 position = Vector2(1213, 728)

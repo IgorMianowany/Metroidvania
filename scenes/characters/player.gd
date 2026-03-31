@@ -14,6 +14,7 @@ var crouching_speed_modifier : float = .85
 var coyote_jump : bool = true
 var on_floor : bool = true
 var current_gun : Data.Gun = Data.Gun.SINGLE
+var shotgun_distance : float = 30
 
 @export_category("Move")
 @export var dash_speed : float = 400
@@ -37,6 +38,7 @@ var current_gun : Data.Gun = Data.Gun.SINGLE
 @onready var crosshair : Crosshair = $Sprites/Crosshair
 @onready var standing_collision_shape : CollisionShape2D = $StandingCollision
 @onready var crouching_collision_shape : CollisionShape2D = $CrouchCollision
+@onready var shotgun_particles : GPUParticles2D = $ShotgunParticles
 
 signal shoot(pos : Vector2, dir : Vector2, gun : Data.Gun)
 
@@ -83,7 +85,9 @@ func get_input():
 		shoot.emit(position, get_local_mouse_position().normalized(), current_gun)
 		reload_timer.start()
 		if current_gun == Data.Gun.SHOTGUN:
-			$ShotgunParticles
+			shotgun_particles.position = get_aim_dir().normalized() * shotgun_distance
+			shotgun_particles.process_material.set('direction', get_aim_dir())
+			shotgun_particles.emitting = true
 	if Input.is_action_just_pressed("dash") and not is_dashing and is_on_floor():
 		dash()
 	if Input.is_action_just_pressed("crouch"):
@@ -94,6 +98,9 @@ func _input(event: InputEvent) -> void:
 	if event.is_action("exit"):
 		get_tree().quit()
 		
+func get_aim_dir() -> Vector2:
+	return get_local_mouse_position()
+	
 func animate():
 	var animation : String
 	
@@ -150,6 +157,8 @@ func _dash_finish():
 
 func update_crosshair():
 	crosshair.position = get_local_mouse_position()
+	#crosshair.position.x = clampf(crosshair.position.x, -100, 100)
+	#crosshair.position.y = clampf(crosshair.position.y, -100, 100)
 
 func toggle_crouch():
 	crouching_collision_shape.disabled = is_crouching
