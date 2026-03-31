@@ -3,7 +3,8 @@ extends Node2D
 var bullet_scene := preload("res://scenes/bullets/bullet.tscn")
 var explosion_scene := preload("res://scenes/bullets/explosion.tscn")
 var enemy_scenes = {
-	Data.Enemy.DRONE : preload("res://scenes/characters/drone.tscn")
+	Data.Enemy.DRONE : preload("res://scenes/characters/drone.tscn"),
+	Data.Enemy.SOLDIER : preload("res://scenes/characters/soldier.tscn")
 }
 
 @onready var gates = $Gates

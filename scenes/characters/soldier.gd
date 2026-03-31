@@ -4,10 +4,15 @@ extends CharacterBody2D
 
 var speed = 3500
 var speed_mod = 1
-var health = 5
+var health = 5:
+	set(value):
+		health = value
+		if health <= 0:
+			spawn_point.defeated = true
 var direction : Vector2 = Vector2(1.0,0.0)
 var is_player_in_range : bool = false
 var player : Player
+var spawn_point : Marker2D
 
 @onready var ledge_marker : Area2D = $LedgeMarker
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
@@ -63,6 +68,10 @@ func _shoot():
 	add_child(bullet)
 	bullet.direction = direction
 	bullet.position = bullet_spawn.position
+	
+func setup(spawner : Marker2D):
+	position = spawner.global_position
+	spawn_point = spawner
 
 func _die():
 	queue_free()

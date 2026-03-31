@@ -13,7 +13,7 @@ const LEVEL_PATHS = {
 	Level.SEWER : "res://scenes/levels/sewer.tscn",
 }
 
-enum Enemy {DRONE}
+enum Enemy {DRONE, SOLDIER}
 
 var current_level : Level = Level.SUBWAY
 var player_health : float = 5

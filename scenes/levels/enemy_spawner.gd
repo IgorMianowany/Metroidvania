@@ -1,3 +1,4 @@
+class_name EnemySpawner
 extends Marker2D
 
 var uid : String
