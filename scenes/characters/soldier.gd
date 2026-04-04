@@ -20,6 +20,7 @@ var shoot_up : bool = false
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 @onready var bullet_scene := preload("res://scenes/bullets/soldier_bullet.tscn")
 @onready var bullet_spawn : Marker2D = $BulletSpawn
+@onready var center : Marker2D = $Center
 @onready var sprite : Sprite2D = $Sprite2D
 
 
@@ -71,7 +72,7 @@ func _on_player_detection_body_exited(_body: Node2D) -> void:
 func _shoot():
 	var bullet : Bullet = bullet_scene.instantiate()
 	add_child(bullet)
-	bullet.direction = direction
+	bullet.direction = center.position.direction_to(bullet_spawn.position)
 	bullet.position = bullet_spawn.position
 	
 func setup(spawner : Marker2D):

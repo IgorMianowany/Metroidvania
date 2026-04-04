@@ -110,7 +110,7 @@ position = Vector2(668, 534)
 position = Vector2(1198, 530)
 
 [node name="EnemySpawner3" parent="EnemySpawns" index="2" instance=ExtResource("8_katyj")]
-position = Vector2(1198, 530)
+position = Vector2(834, 535)
 type = 1
 
 [editable path="Entities/Teleport"]
