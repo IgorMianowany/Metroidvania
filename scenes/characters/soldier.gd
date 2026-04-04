@@ -13,6 +13,8 @@ var direction : Vector2 = Vector2(1.0,0.0)
 var is_player_in_range : bool = false
 var player : Player
 var spawn_point : Marker2D
+var position_offset : float = 5
+var shoot_up : bool = false
 
 @onready var ledge_marker : Area2D = $LedgeMarker
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
@@ -35,7 +37,10 @@ func _physics_process(delta: float) -> void:
 		var dir = position.direction_to(player.global_position).sign()
 		direction = Vector2(dir.x, 0)
 		transform.x.x = dir.x + ((scale.x - 1) * dir.x)
-		if not animation_player.current_animation.begins_with("shoot"):
+		#if not animation_player.current_animation.begins_with("shoot"):
+		if shoot_up:
+			animation_player.play("shoot_v")
+		else:
 			animation_player.play("shoot_h")
 	
 	if direction:
@@ -84,3 +89,8 @@ func hit(damage : int):
 	if health <= 0:
 		animation_player.play("die")
 	
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name.begins_with("shoot"):
+		shoot_up = player.position.y < position.y + position_offset and abs(player.position.x - position.x) < 25
