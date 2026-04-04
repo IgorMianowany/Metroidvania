@@ -56,6 +56,7 @@ const GUN_DIRECTIONS = {
 }
 
 func _ready() -> void:
+	@warning_ignore("narrowing_conversion")
 	ui.set_health(Data.player_health)
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
@@ -146,6 +147,7 @@ func get_custom_gravity() -> float:
 	
 func hit(damage : int):
 	Data.player_health -= damage
+	@warning_ignore("narrowing_conversion")
 	ui.set_health(Data.player_health)
 		
 func dash():
